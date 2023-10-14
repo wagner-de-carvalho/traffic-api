@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,11 +49,19 @@ public class ProprietarioController {
 
         if (!proprietarioRepository.existsById(proprietarioId)) {
             return ResponseEntity.notFound().build();
-
         }
 
         proprietario.setId(proprietarioId);
         var proprietarioAtualizado = proprietarioRepository.save(proprietario);
         return ResponseEntity.ok(proprietarioAtualizado);
+    }
+
+    @DeleteMapping("/{proprietarioId}")
+    public ResponseEntity<Void> remover(@PathVariable Long proprietarioId) {
+        if (!proprietarioRepository.existsById(proprietarioId)) {
+            return ResponseEntity.notFound().build();
+        }
+        proprietarioRepository.deleteById(proprietarioId);
+        return ResponseEntity.noContent().build();
     }
 }
