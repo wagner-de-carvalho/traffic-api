@@ -6,4 +6,4 @@ Utilizando o `maven`:
 - mvn spring-boot:run
 
 ### Temporário
-- Content Negotiation
+- 4.2
