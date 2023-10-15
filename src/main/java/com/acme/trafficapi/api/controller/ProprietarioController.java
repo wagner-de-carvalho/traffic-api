@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.acme.trafficapi.domain.model.Proprietario;
 import com.acme.trafficapi.domain.repository.ProprietarioRepository;
+import com.acme.trafficapi.domain.service.RegistroProprietarioService;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.AllArgsConstructor;
 public class ProprietarioController {
 
     private ProprietarioRepository proprietarioRepository;
+    private final RegistroProprietarioService registroProprietarioService;
 
     @GetMapping
     public List<Proprietario> listar() {
@@ -41,7 +43,7 @@ public class ProprietarioController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Proprietario adicionar(@Valid @RequestBody Proprietario proprietario) {
-        return proprietarioRepository.save(proprietario);
+        return registroProprietarioService.salvar(proprietario);
     }
 
     @PutMapping("/{proprietarioId}")
@@ -53,7 +55,7 @@ public class ProprietarioController {
         }
 
         proprietario.setId(proprietarioId);
-        var proprietarioAtualizado = proprietarioRepository.save(proprietario);
+        var proprietarioAtualizado = registroProprietarioService.salvar(proprietario);
         return ResponseEntity.ok(proprietarioAtualizado);
     }
 
@@ -62,7 +64,7 @@ public class ProprietarioController {
         if (!proprietarioRepository.existsById(proprietarioId)) {
             return ResponseEntity.notFound().build();
         }
-        proprietarioRepository.deleteById(proprietarioId);
+        registroProprietarioService.excluir(proprietarioId);
         return ResponseEntity.noContent().build();
     }
 }
