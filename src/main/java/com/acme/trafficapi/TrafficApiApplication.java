@@ -9,5 +9,4 @@ public class TrafficApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrafficApiApplication.class, args);
 	}
-
 }
