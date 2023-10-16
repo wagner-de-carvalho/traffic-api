@@ -1,6 +1,6 @@
 package com.acme.trafficapi.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class RegistroVeiculoService {
 
         veiculo.setProprietario(proprietario);
         veiculo.setStatus(StatusVeiculo.REGULAR);
-        veiculo.setDataCadastro(LocalDateTime.now());
+        veiculo.setDataCadastro(OffsetDateTime.now());
 
         return veiculoRepository.save(veiculo);
     }
