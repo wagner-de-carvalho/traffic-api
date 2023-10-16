@@ -1,6 +1,5 @@
 package com.acme.trafficapi.domain.service;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
