@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.acme.trafficapi.api.VeiculoModel;
 import com.acme.trafficapi.domain.model.Veiculo;
 import com.acme.trafficapi.domain.repository.VeiculoRepository;
 import com.acme.trafficapi.domain.service.RegistroVeiculoService;
@@ -33,8 +34,9 @@ public class VeiculoController {
     }
 
     @GetMapping("/{veiculoId}")
-    public ResponseEntity<Veiculo> buscar(@PathVariable Long veiculoId) {
+    public ResponseEntity<VeiculoModel> buscar(@PathVariable Long veiculoId) {
         return veiculoRepository.findById(veiculoId)
+                .map()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
