@@ -2,6 +2,7 @@ package com.acme.trafficapi.api.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/veiculos")
 public class VeiculoController {
 
+    private final ModelMapper modelMapper;
     private RegistroVeiculoService registroVeiculoService;
     private VeiculoRepository veiculoRepository;
 
@@ -36,7 +38,7 @@ public class VeiculoController {
     @GetMapping("/{veiculoId}")
     public ResponseEntity<VeiculoModel> buscar(@PathVariable Long veiculoId) {
         return veiculoRepository.findById(veiculoId)
-                .map()
+                .map(veiculo -> modelMapper.map(veiculo, VeiculoModel.class))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

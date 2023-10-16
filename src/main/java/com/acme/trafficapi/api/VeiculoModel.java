@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class VeiculoModel {
     private Long id;
-    private String placa;
+    private String numeroPlaca;
     private String modelo;
     private String nomeProprietario;
     private StatusVeiculo status;
