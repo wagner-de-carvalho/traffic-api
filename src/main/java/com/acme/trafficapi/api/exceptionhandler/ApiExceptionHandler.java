@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 
@@ -19,8 +21,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.acme.trafficapi.domain.exception.NegocioException;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+    private final MessageSource messageSource;
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -34,7 +40,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .stream()
                 .collect(Collectors.toMap(
                         objectError -> ((FieldError) objectError).getField(),
-                        DefaultMessageSourceResolvable::getDefaultMessage));
+                        objectError -> messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
 
         problemDetail.setProperty("fields", fields);
 
