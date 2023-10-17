@@ -6,12 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.acme.trafficapi.api.model.AutuacaoModel;
-import com.acme.trafficapi.api.model.VeiculoModel;
 import com.acme.trafficapi.api.model.input.AutuacaoInput;
-import com.acme.trafficapi.api.model.input.VeiculoInput;
 import com.acme.trafficapi.domain.model.Autuacao;
-import com.acme.trafficapi.domain.model.Veiculo;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

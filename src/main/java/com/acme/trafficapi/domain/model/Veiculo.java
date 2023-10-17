@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,7 +36,7 @@ public class Veiculo {
 
     private String placa;
 
-    @OneToMany(mappedBy = "veiculo")
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL)
     private List<Autuacao> autuacoes = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

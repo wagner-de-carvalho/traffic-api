@@ -13,7 +13,7 @@ public class AutuacaoInput {
     @NotBlank
     private String descricao;
 
-    @NotBlank
+    // @NotBlank
     @Positive
     private BigDecimal valorMulta;
 }
