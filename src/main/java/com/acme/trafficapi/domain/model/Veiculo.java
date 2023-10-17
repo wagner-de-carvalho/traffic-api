@@ -44,4 +44,12 @@ public class Veiculo {
     private OffsetDateTime dataCadastro;
 
     private OffsetDateTime dataApreensao;
+
+    public Autuacao adicionarAutuacao(Autuacao autuacao) {
+        autuacao.setVeiculo(this);
+        autuacao.setDataOcorrencia(OffsetDateTime.now());
+        getAutuacoes().add(autuacao);
+
+        return autuacao;
+    }
 }
