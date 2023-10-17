@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.acme.trafficapi.api.VeiculoModel;
 import com.acme.trafficapi.api.assembler.VeiculoAssembler;
-import com.acme.trafficapi.domain.model.Veiculo;
+import com.acme.trafficapi.api.model.VeiculoModel;
+import com.acme.trafficapi.api.model.input.VeiculoInput;
 import com.acme.trafficapi.domain.repository.VeiculoRepository;
 import com.acme.trafficapi.domain.service.RegistroVeiculoService;
 
@@ -45,7 +45,8 @@ public class VeiculoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VeiculoModel cadastrar(@Valid @RequestBody Veiculo veiculo) {
+    public VeiculoModel cadastrar(@Valid @RequestBody VeiculoInput veiculoInput) {
+        var veiculo = veiculoAssembler.toEntity(veiculoInput);
         return veiculoAssembler.toModel(registroVeiculoService.cadastrar(veiculo));
     }
 

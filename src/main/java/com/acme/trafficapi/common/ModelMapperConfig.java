@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.acme.trafficapi.api.VeiculoModel;
+import com.acme.trafficapi.api.model.VeiculoModel;
 import com.acme.trafficapi.domain.model.Veiculo;
 
 @Configuration

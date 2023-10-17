@@ -1,4 +1,4 @@
-package com.acme.trafficapi.api;
+package com.acme.trafficapi.api.model;
 
 import lombok.Getter;
 import lombok.Setter;

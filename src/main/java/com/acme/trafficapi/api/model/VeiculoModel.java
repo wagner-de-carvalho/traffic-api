@@ -1,4 +1,4 @@
-package com.acme.trafficapi.api;
+package com.acme.trafficapi.api.model;
 
 import java.time.OffsetDateTime;
 
