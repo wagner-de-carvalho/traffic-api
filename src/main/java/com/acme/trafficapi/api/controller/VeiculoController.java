@@ -2,7 +2,6 @@ package com.acme.trafficapi.api.controller;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acme.trafficapi.api.VeiculoModel;
+import com.acme.trafficapi.api.assembler.VeiculoAssembler;
 import com.acme.trafficapi.domain.model.Veiculo;
 import com.acme.trafficapi.domain.repository.VeiculoRepository;
 import com.acme.trafficapi.domain.service.RegistroVeiculoService;
@@ -26,27 +26,27 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/veiculos")
 public class VeiculoController {
 
-    private final ModelMapper modelMapper;
+    private final VeiculoAssembler veiculoAssembler;
     private RegistroVeiculoService registroVeiculoService;
     private VeiculoRepository veiculoRepository;
 
     @GetMapping
-    public List<Veiculo> listar() {
-        return veiculoRepository.findAll();
+    public List<VeiculoModel> listar() {
+        return veiculoAssembler.toCollectionModel(veiculoRepository.findAll());
     }
 
     @GetMapping("/{veiculoId}")
     public ResponseEntity<VeiculoModel> buscar(@PathVariable Long veiculoId) {
         return veiculoRepository.findById(veiculoId)
-                .map(veiculo -> modelMapper.map(veiculo, VeiculoModel.class))
+                .map(veiculoAssembler::toModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Veiculo adicionar(@Valid @RequestBody Veiculo veiculo) {
-        return registroVeiculoService.cadastrar(veiculo);
+    public VeiculoModel cadastrar(@Valid @RequestBody Veiculo veiculo) {
+        return veiculoAssembler.toModel(registroVeiculoService.cadastrar(veiculo));
     }
 
 }
