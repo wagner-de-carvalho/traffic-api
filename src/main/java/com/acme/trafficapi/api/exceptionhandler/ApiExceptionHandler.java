@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.acme.trafficapi.domain.exception.EntidadeNaoEncontradaException;
 import com.acme.trafficapi.domain.exception.NegocioException;
 
 import lombok.AllArgsConstructor;
@@ -49,6 +50,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setTitle(e.getMessage());
         problemDetail.setType(URI.create(String.format("%s%s", URL, "/regra-de-negocio")));
+        return problemDetail;
+    }
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ProblemDetail handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException e) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle(e.getMessage());
+        problemDetail.setType(URI.create(String.format("%s%s", URL, "/nao-encontrado")));
         return problemDetail;
     }
 

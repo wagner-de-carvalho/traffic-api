@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.acme.trafficapi.domain.exception.EntidadeNaoEncontradaException;
 import com.acme.trafficapi.domain.exception.NegocioException;
 import com.acme.trafficapi.domain.model.StatusVeiculo;
 import com.acme.trafficapi.domain.model.Veiculo;
@@ -48,7 +49,7 @@ public class RegistroVeiculoService {
     @Transactional
     public Veiculo buscar(Long veiculoId) {
         return veiculoRepository.findById(veiculoId)
-                .orElseThrow(() -> new NegocioException("Veículo não encontrado"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Veículo não encontrado"));
     }
 
 }
