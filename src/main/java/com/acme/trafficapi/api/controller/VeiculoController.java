@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +18,7 @@ import com.acme.trafficapi.api.assembler.VeiculoAssembler;
 import com.acme.trafficapi.api.model.VeiculoModel;
 import com.acme.trafficapi.api.model.input.VeiculoInput;
 import com.acme.trafficapi.domain.repository.VeiculoRepository;
+import com.acme.trafficapi.domain.service.ApreensaoVeiculoService;
 import com.acme.trafficapi.domain.service.RegistroVeiculoService;
 
 import jakarta.validation.Valid;
@@ -27,6 +30,7 @@ import lombok.AllArgsConstructor;
 public class VeiculoController {
 
     private final VeiculoAssembler veiculoAssembler;
+    private ApreensaoVeiculoService apreensaoVeiculoService;
     private RegistroVeiculoService registroVeiculoService;
     private VeiculoRepository veiculoRepository;
 
@@ -48,6 +52,18 @@ public class VeiculoController {
     public VeiculoModel cadastrar(@Valid @RequestBody VeiculoInput veiculoInput) {
         var veiculo = veiculoAssembler.toEntity(veiculoInput);
         return veiculoAssembler.toModel(registroVeiculoService.cadastrar(veiculo));
+    }
+
+    @PutMapping("/{veiculoId}/apreensao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void apreender(@PathVariable Long veiculoId) {
+        apreensaoVeiculoService.apreender(veiculoId);
+    }
+
+    @DeleteMapping("/{veiculoId}/apreensao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removerApreensao(@PathVariable Long veiculoId) {
+        apreensaoVeiculoService.removerApreensao(veiculoId);
     }
 
 }
