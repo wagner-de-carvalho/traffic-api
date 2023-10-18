@@ -30,7 +30,7 @@ public class AutuacaoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AutuacaoModel registar(@PathVariable Long veiculoId,
+    public AutuacaoModel registrar(@PathVariable Long veiculoId,
             @Valid @RequestBody AutuacaoInput autuacaoInput) {
 
         var autuacao = autuacaoAssembler.toEntity(autuacaoInput);
